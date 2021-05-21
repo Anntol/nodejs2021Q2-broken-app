@@ -2,8 +2,8 @@ const Sequelize = require('sequelize');
                                 //database username   password
 const sequelize = new Sequelize('gamedb', 'postgres', 'ghastb0i', {
     host: 'localhost',
-    dialect: 'postgres',
-    operatorsAliases: false
+    port: '5433',
+    dialect: 'postgres'
 })
 
 sequelize.authenticate().then(
@@ -20,4 +20,12 @@ sequelize.sync().then(() => {
     console.log(`Database is synchronized!`);
 });
 
-module.exports = sequelize;
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.users = require("./models/user")(sequelize, Sequelize);
+db.games = require("./models/game")(sequelize, Sequelize);
+
+module.exports = db;

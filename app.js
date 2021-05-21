@@ -5,7 +5,7 @@ var user = require('./controllers/usercontroller');
 var game = require('./controllers/gamecontroller')
 
 
-db.sync();
+db.sequelize.sync();
 app.use(express.json());
 app.use('/api/auth', user);
 app.use(require('./middleware/validate-session'))
