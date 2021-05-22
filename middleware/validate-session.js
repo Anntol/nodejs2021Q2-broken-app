@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
-var db = require('../db');
-var User = db.users;
+import jwt from 'jsonwebtoken';
+import db from '../db.js';
 
-module.exports = function (req, res, next) {
+const User = db.users;
+
+export function validateSession (req, res, next) {
     if (req.method == 'OPTIONS') {
         next();   // allowing options as a method for request
     } else {

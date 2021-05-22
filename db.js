@@ -1,4 +1,7 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
+import { userModel } from './models/user.js';
+import { gameModel } from './models/game.js';
+
                                 //database username   password
 const sequelize = new Sequelize('gamedb', 'postgres', 'ghastb0i', {
     host: 'localhost',
@@ -25,7 +28,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require("./models/user")(sequelize, Sequelize);
-db.games = require("./models/game")(sequelize, Sequelize);
+db.users = userModel(sequelize, Sequelize);
+db.games = gameModel(sequelize, Sequelize);
 
-module.exports = db;
+export default db;

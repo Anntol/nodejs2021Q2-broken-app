@@ -1,9 +1,10 @@
-var router = require('express').Router();
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import db from '../db.js';
 
-var db = require('../db');
-var User = db.users;
+const router = express.Router();
+const User = db.users;
 
 router.post('/signup', (req, res) => {
     User.create({
@@ -49,4 +50,4 @@ router.post('/signin', (req, res) => {
     })
 })
 
-module.exports = router;
+export { router };
