@@ -1,14 +1,16 @@
-var router = Router();
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import db from '../db.js';
 
-var User = require('../db').import('../models/user');
+const router = express.Router();
+const User = db.users;
 
 router.post('/signup', (req, res) => {
     User.create({
         full_name: req.body.user.full_name,
         username: req.body.user.username,
-        passwordhash: bcrypt.hashSync(req.body.user.password, 10),
+        passwordHash: bcrypt.hashSync(req.body.user.password, 10),
         email: req.body.user.email,
     })
         .then(
@@ -38,7 +40,7 @@ router.post('/signin', (req, res) => {
                         sessionToken: token
                     });
                 } else {
-                    res.status(502).send({ error: "Passwords do not match." })
+                    res.status(401).send({ error: "Passwords do not match." })
                 }
             });
         } else {
@@ -48,4 +50,4 @@ router.post('/signin', (req, res) => {
     })
 })
 
-module.exports = router;
+export { router };

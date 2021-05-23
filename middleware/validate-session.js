@@ -1,11 +1,13 @@
-const jwt = require('jsonwebtoken');
-var User = require('sequelize').import('../models/user');
+import jwt from 'jsonwebtoken';
+import db from '../db.js';
 
-module.exports = function (req, res, next) {
+const User = db.users;
+
+export function validateSession (req, res, next) {
     if (req.method == 'OPTIONS') {
         next();   // allowing options as a method for request
     } else {
-        var sessionToken = req.headers.authorization;
+        var sessionToken = req.headers.authorization?.split(" ")[1] || '';
         console.log(sessionToken);
         if (!sessionToken) return res.status(403).send({ auth: false, message: "No token provided." });
         else {
